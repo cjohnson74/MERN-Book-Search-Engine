@@ -4,7 +4,7 @@ const typeDefs = gql`
     type User {
         _id: ID!
         username: String! @unique
-        email: String! @unique @constraint(format: "email")
+        email: String! @unique @constraint(format: 'email')
         bookCount: Number
         savedBooks: [Book]
     }
@@ -12,6 +12,11 @@ const typeDefs = gql`
     type Query {
         users: [User]
         books: [Book]
+    }
+
+    type Mutation {
+        login(email: String! @unique @constraint(format: 'email', password: String!): Auth)
+        addUser(username: String! @unique, email: String! @unique @constraint(format: 'email', password: String!): Auth)
     }
 
     type Book {
