@@ -15,7 +15,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        login(email: String! @unique @constraint(format: 'email'), password: String!): Auth
+        login(input: LoginInput): Auth
         addUser(input: AddUserInput): Auth
         saveBook(input: SaveBookInput): User
     }
@@ -31,6 +31,11 @@ const typeDefs = gql`
     input AddUserInput: {
         username: String! @unique
         email: String! @unique @constraint(format: 'email')
+        password: String!
+    }
+
+    input LoginInput {
+        email: String! @unique @constraint(format: 'email'
         password: String!
     }
 
