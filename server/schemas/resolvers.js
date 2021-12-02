@@ -16,7 +16,7 @@ module.exports = resolvers = {
   },
   Mutation: {
     addUser: async (parent, args) => {
-      const user = await User.create(args);
+      const user = await User.create(args.input);
 
       const token = signToken(user);
 
@@ -24,7 +24,7 @@ module.exports = resolvers = {
     },
     login: async (parent, args) => {
       const user = await User.findOne({
-        $or: [{ username: args.username }, { email: args.email }],
+          email: args.input.email
       });
       if (!user) {
          throw new AuthenticationError("Incorrect Credentials");
@@ -54,7 +54,7 @@ module.exports = resolvers = {
         }
         throw new AuthenticationError("Must be logged in");
     },
-    deleteBook: async (parent, args, context) => {
+    removeBook: async (parent, args, context) => {
         if (context.user) {
             const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id },
