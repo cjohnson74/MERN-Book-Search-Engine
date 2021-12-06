@@ -26,11 +26,12 @@ module.exports = resolvers = {
       const user = await User.findOne({
           email: args.input.email
       });
+      console.log(user)
       if (!user) {
          throw new AuthenticationError("Incorrect Credentials");
       }
 
-      const correctPw = await user.isCorrectPassword(args.password);
+      const correctPw = await user.isCorrectPassword(args.input.password);
 
       if (!correctPw) {
           throw new AuthenticationError("Incorrect Credentials");
