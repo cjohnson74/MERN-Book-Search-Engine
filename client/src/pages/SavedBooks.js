@@ -9,7 +9,7 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  // const [foundBooks, setFoundBooks] = useState({});
+  const [foundBooks, setFoundBooks] = useState({});
   const [removeBook, { err }] = useMutation(REMOVE_BOOK);
   const { data, error } = useQuery(GET_ME);
   const userData = data?.me || data?.user || {};
@@ -50,16 +50,20 @@ const SavedBooks = () => {
     }
     
     try {
-      const response = await deleteBook(bookId, token);
+      userData = await removeBook({
+        variables: {
+            bookId
+        }
+      });
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      // if (!response.ok) {
+      //   throw new Error('something went wrong!');
+      // }
 
-      const updatedUser = await response.json();
+      // const updatedUser = await response.json();
       // setUserData(updatedUser);
       // upon success, remove book's id from localStorage
-      removeBookId(bookId);
+      // removeBookId(bookId);
     } catch (err) {
       console.error(err);
     }
