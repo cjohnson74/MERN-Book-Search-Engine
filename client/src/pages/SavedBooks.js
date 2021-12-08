@@ -10,6 +10,7 @@ import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
   // const [foundBooks, setFoundBooks] = useState({});
+  const [removeBook, { err }] = useMutation(REMOVE_BOOK);
   const { data, error } = useQuery(GET_ME);
   const userData = data?.me || data?.user || {};
   // use this to determine if `useEffect()` hook needs to run again
@@ -47,7 +48,7 @@ const SavedBooks = () => {
     if (!token) {
       return false;
     }
-
+    
     try {
       const response = await deleteBook(bookId, token);
 
